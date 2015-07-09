@@ -2,12 +2,15 @@
 #
 # File: swarm-setup.sh
 #
-# Purpose: Complete setup steps for the Jenkins slave compute instance
+# Purpose: Complete setup steps for the Jenkins worker node instance
 #
 # Pre-conditions:
 #  slave.jar is downloaded to the user home directory
-#  This script is run from the user home directory
+#  This script is run from the Git repo directory
 #
+
+echo 'Changing to user home directory'
+cd
 
 echo 'Installing Docker...'
 wget -q -O docker-script.sh https://get.docker.com/
@@ -73,7 +76,7 @@ sudo mv swarm /etc/init.d/
 sudo chmod 755 /etc/init.d/swarm
 sudo update-rc.d swarm defaults
 
-echo 'Installing ZIP program'
+echo 'Installing UNZIP program'
 cd
 sudo apt-get -y -qq install unzip=6.0-8+deb7u2
 

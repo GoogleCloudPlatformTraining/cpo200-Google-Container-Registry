@@ -81,7 +81,7 @@ cd
 sudo apt-get -y -qq install unzip=6.0-8+deb7u2
 
 echo 'Installing Packer program'
-wget -q -O packer.zip https://dl.bintray.com/mitchellh/packer/packer_0.7.5_linux_amd64.zip
+wget -q -O packer.zip https://dl.bintray.com/mitchellh/packer/packer_0.8.2_linux_amd64.zip
 sudo mkdir -p /opt/packer
 sudo unzip -d /opt/packer packer.zip
 

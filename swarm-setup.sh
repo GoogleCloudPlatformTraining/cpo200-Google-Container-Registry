@@ -17,6 +17,9 @@ wget -q -O docker-script.sh https://get.docker.com/
 chmod +x docker-script.sh
 ./docker-script.sh
 
+# Remove the Docker script file
+rm docker-script.sh
+
 sudo gpasswd -a $USER docker
 sudo addgroup build
 sudo adduser --disabled-password --system --ingroup build jenkins

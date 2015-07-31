@@ -91,5 +91,8 @@ sudo unzip -d /opt/packer packer.zip
 # Remove the Packer installation ZIP file
 rm packer.zip
 
+# Remove the Git repository
+rm -fr CPO200-Google-Container-Registry
+
 echo 'Finished with installation script'
 

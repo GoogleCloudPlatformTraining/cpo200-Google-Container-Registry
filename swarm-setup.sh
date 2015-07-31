@@ -94,5 +94,8 @@ rm packer.zip
 # Remove the Git repository
 rm -fr CPO200-Google-Container-Registry
 
+# Remove this script
+rm swarm-setup.sh
+
 echo 'Finished with installation script'
 

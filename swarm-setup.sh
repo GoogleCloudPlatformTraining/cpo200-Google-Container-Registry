@@ -88,5 +88,8 @@ wget -q -O packer.zip https://dl.bintray.com/mitchellh/packer/packer_0.8.2_linux
 sudo mkdir -p /opt/packer
 sudo unzip -d /opt/packer packer.zip
 
+# Remove the Packer installation ZIP file
+rm packer.zip
+
 echo 'Finished with installation script'
 

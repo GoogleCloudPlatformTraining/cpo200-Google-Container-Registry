@@ -87,6 +87,7 @@ echo 'Installing Packer program'
 wget -q -O packer.zip https://dl.bintray.com/mitchellh/packer/packer_0.7.5_linux_amd64.zip
 sudo mkdir -p /opt/packer
 sudo unzip -d /opt/packer packer.zip
+sudo chown root:staff /opt/packer/*
 
 # Remove the Packer installation ZIP file
 rm packer.zip

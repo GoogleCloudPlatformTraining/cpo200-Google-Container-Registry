@@ -58,7 +58,7 @@ PATH=/sbin:/usr/sbin:/bin:/usr/bin:/opt/packer
 
 do_start () {
         # start Swarm
-        exec java  -Xmx256m -Xmx256m -Dfile.encoding=UTF-8   -jar /opt/swarm-client/swarm-client-1.24.jar  -master http://jenkins-master -fsroot /home/jenkins -description 'auto' -labels 'slave' -name 'slave-auto' -executors 1 -mode exclusive
+        exec java  -Xmx256m -Xmx256m -Dfile.encoding=UTF-8   -jar /opt/swarm-client/swarm-client-1.24.jar  -master http://jenkins-master:8080 -fsroot /home/jenkins -description 'auto' -labels 'slave' -name 'slave-auto' -executors 1 -mode exclusive
 }
 
 # stop case omitted as the instances are ephemeral

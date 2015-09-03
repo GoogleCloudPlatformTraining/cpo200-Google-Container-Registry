@@ -95,6 +95,9 @@ rm packer.zip
 # Update gcloud SDK components
 sudo gcloud components update -q
 
+# Configure the Swarm service to start when the instance boots
+sudo update-rc.d swarm defaults
+
 # Remove the Git repository
 rm -fr CPO200-Google-Container-Registry
 

@@ -92,6 +92,9 @@ sudo chown root:staff /opt/packer/*
 # Remove the Packer installation ZIP file
 rm packer.zip
 
+# Update gcloud SDK components
+sudo gcloud components update -q
+
 # Remove the Git repository
 rm -fr CPO200-Google-Container-Registry
 

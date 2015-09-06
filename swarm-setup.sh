@@ -81,7 +81,7 @@ sudo update-rc.d swarm defaults
 
 echo 'Installing UNZIP program'
 cd
-sudo apt-get -y -qq install unzip=6.0-8+deb7u2
+sudo apt-get -y -qq install unzip
 
 echo 'Installing Packer program'
 wget -q -O packer.zip https://dl.bintray.com/mitchellh/packer/packer_0.8.3_linux_amd64.zip

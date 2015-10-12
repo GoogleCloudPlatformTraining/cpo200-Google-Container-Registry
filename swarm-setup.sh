@@ -55,10 +55,11 @@ tee swarm << 'EOF' > /dev/null
 ### END INIT INFO
 
 PATH=/sbin:/usr/sbin:/bin:/usr/bin:/opt/packer
+JPW=
 
 do_start () {
         # start Swarm
-        exec java  -Xmx256m -Xmx256m -Dfile.encoding=UTF-8   -jar /opt/swarm-client/swarm-client-1.24.jar  -master http://jenkins-master:8080 -fsroot /home/jenkins -description 'auto' -labels 'slave' -name 'slave-auto' -executors 1 -mode exclusive
+        exec java  -Xmx256m -Xmx256m -Dfile.encoding=UTF-8   -jar /opt/swarm-client/swarm-client-1.24.jar  -master http://jenkins-master:8080 -username admin -password $JPW -fsroot /home/jenkins -description 'auto' -labels 'slave' -name 'slave-auto' -executors 1 -mode exclusive
 }
 
 # stop case omitted as the instances are ephemeral
@@ -78,6 +79,8 @@ sudo chown root:root swarm
 sudo mv swarm /etc/init.d/
 sudo chmod 755 /etc/init.d/swarm
 sudo update-rc.d swarm defaults
+
+sudo sed -i "s|JPW=|JPW=$JENKINS_PW|g" /etc/init.d/swarm
 
 echo 'Installing UNZIP program'
 cd

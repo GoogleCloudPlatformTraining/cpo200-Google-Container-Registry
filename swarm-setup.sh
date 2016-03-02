@@ -87,7 +87,7 @@ cd
 sudo apt-get -y -qq install unzip
 
 echo 'Installing Packer program'
-wget -q -O packer.zip https://dl.bintray.com/mitchellh/packer/packer_0.8.3_linux_amd64.zip
+wget -q -O packer.zip https://releases.hashicorp.com/packer/0.9.0/packer_0.9.0_linux_amd64.zip
 sudo mkdir -p /opt/packer
 sudo unzip -d /opt/packer packer.zip
 sudo chown root:staff /opt/packer/*

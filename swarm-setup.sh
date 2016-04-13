@@ -101,11 +101,6 @@ sudo gcloud components update -q
 # Configure the Swarm service to start when the instance boots
 sudo update-rc.d swarm defaults
 
-# Remove the Git repository
-rm -fr CPO200-Google-Container-Registry
-
-# Remove this script
-rm swarm-setup.sh
 
 echo 'Finished with installation script'
 

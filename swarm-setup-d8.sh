@@ -30,7 +30,7 @@ sudo service docker restart
 
 echo 'Installing Supervisor...'
 # Install supervisor package
-sudo apt-get install supervisor
+sudo apt-get -y -qq install supervisor
 
 sudo addgroup build
 sudo adduser --disabled-password --system --ingroup build jenkins

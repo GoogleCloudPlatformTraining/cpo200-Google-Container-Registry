@@ -41,8 +41,8 @@ sudo mv slave.jar /opt/jenkins-slave
 sudo chown -R root:root /opt/jenkins-slave
 
 echo 'Installing Jenkins Swarm plugin client-side software'
-wget -q -O swarm-client-1.24.jar \
-http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/1.24/swarm-client-1.24-jar-with-dependencies.jar
+wget -q -O swarm-client-2.0.jar \
+http://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/2.0/swarm-client-2.0-jar-with-dependencies.jar
 sudo mkdir -p /opt/swarm-client
 sudo mv swarm-client*.jar /opt/swarm-client/
 sudo chown -R root:root /opt/swarm-client
@@ -66,7 +66,7 @@ JPW=
 
 do_start () {
         # start Swarm
-        exec java  -Xmx256m -Xmx256m -Dfile.encoding=UTF-8   -jar /opt/swarm-client/swarm-client-1.24.jar  -master http://jenkins-master:8080 -username admin -password $JPW -fsroot /home/jenkins -description 'auto' -labels 'slave' -name 'slave-auto' -executors 1 -mode exclusive
+        exec java  -Xmx256m -Xmx256m -Dfile.encoding=UTF-8   -jar /opt/swarm-client/swarm-client-2.0.jar  -master http://jenkins-master:8080 -username admin -password $JPW -fsroot /home/jenkins -description 'auto' -labels 'slave' -name 'slave-auto' -executors 1 -mode exclusive
 }
 
 # stop case omitted as the instances are ephemeral

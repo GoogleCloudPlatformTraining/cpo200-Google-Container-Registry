@@ -17,16 +17,20 @@ echo 'Installing Docker...'
 sudo apt-get purge lxc-docker*
 sudo apt-get purge docker.io*
 sudo apt-get update
-sudo apt-get install apt-transport-https ca-certificates
+sudo apt-get -y -qq install apt-transport-https ca-certificates
 sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 sudo bash -c "echo deb https://apt.dockerproject.org/repo debian-jessie main >> /etc/apt/sources.list.d/docker.list"
 sudo apt-get update
 sudo apt-cache policy docker-engine
-sudo apt-get install docker-engine
+sudo apt-get -y -qq install docker-engine
 sudo service docker start
 sudo docker run hello-world
 sudo gpasswd -a $USER docker
 sudo service docker restart
+
+echo 'Installing Supervisor...'
+# Install supervisor package
+sudo apt-get install supervisor
 
 sudo addgroup build
 sudo adduser --disabled-password --system --ingroup build jenkins
@@ -47,47 +51,19 @@ sudo mkdir -p /opt/swarm-client
 sudo mv swarm-client*.jar /opt/swarm-client/
 sudo chown -R root:root /opt/swarm-client
 
-echo 'Installing Swarm init.d script'
-cd
-tee swarm << 'EOF' > /dev/null
-#!/bin/sh
-### BEGIN INIT INFO
-# Provides:          swarm
-# Required-Start:    $local_fs $network
-# Required-Stop:     $local_fs
-# Default-Start:     2 3 4 5
-# Default-Stop:      0 1 6
-# Short-Description: swarm
-# Description:       swarm daemon
-### END INIT INFO
-
-PATH=/sbin:/usr/sbin:/bin:/usr/bin:/opt/packer
-JPW=
-
-do_start () {
-        # start Swarm
-        exec java  -Xmx256m -Xmx256m -Dfile.encoding=UTF-8   -jar /opt/swarm-client/swarm-client-2.0.jar  -master http://jenkins-master:8080 -username admin -password $JPW -fsroot /home/jenkins -description 'auto' -labels 'slave' -name 'slave-auto' -executors 1 -mode exclusive
-}
-
-# stop case omitted as the instances are ephemeral
-case "$1" in
-  start|"")
-        do_start
-        ;;
-  *)
-        echo "Usage: swarm [start]" >&2
-        exit 3
-        ;;
-esac
-:
+echo 'Installing Swarm supervisor config'
+cat >/etc/supervisor/conf.d/swarm.conf << EOF
+[program:swarm]
+directory=/home/jenkins
+command=java -Xmx256m -Xmx256m -Dfile.encoding=UTF-8 -jar /opt/swarm-client/swarm-client-2.0.jar -master http://jenkins-master:8080 -username admin -password JPW -fsroot /home/jenkins -description 'auto' -labels 'slave' -name 'slave-auto' -executors 1 -mode exclusive
+autostart=true
+autorestart=true
+user=jenkins
+stdout_logfile=syslog
+stderr_logfile=syslog
 EOF
 
-sudo chown root:root swarm
-sudo mv swarm /etc/init.d/
-sudo chmod 755 /etc/init.d/swarm
-sudo update-rc.d swarm defaults
-
-sudo sed -i "s|JPW=|JPW=$JENKINS_PW|g" /etc/init.d/swarm
+sudo sed -i "s|JPW|$JENKINS_PW|g" /etc/supervisor/conf.d/swarm.conf
 
 echo 'Installing UNZIP program'
 cd
@@ -106,7 +82,7 @@ rm packer.zip
 sudo gcloud components update -q
 
 # Configure the Swarm service to start when the instance boots
-sudo update-rc.d swarm defaults
-
+sudo supervisorctl reread
+sudo supervisorctl update
 
 echo 'Finished with installation script'

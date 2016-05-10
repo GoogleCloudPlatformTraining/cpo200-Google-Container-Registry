@@ -52,7 +52,8 @@ sudo mv swarm-client*.jar /opt/swarm-client/
 sudo chown -R root:root /opt/swarm-client
 
 echo 'Installing Swarm supervisor config'
-cat >/etc/supervisor/conf.d/swarm.conf << EOF
+cd
+tee swarm.conf << 'EOF' > /dev/null
 [program:swarm]
 directory=/home/jenkins
 command=java -Xmx256m -Xmx256m -Dfile.encoding=UTF-8 -jar /opt/swarm-client/swarm-client-2.0.jar -master http://jenkins-master:8080 -username admin -password JPW -fsroot /home/jenkins -description 'auto' -labels 'slave' -name 'slave-auto' -executors 1 -mode exclusive
@@ -62,6 +63,7 @@ user=jenkins
 stdout_logfile=syslog
 stderr_logfile=syslog
 EOF
+
 
 sudo sed -i "s|JPW|$JENKINS_PW|g" /etc/supervisor/conf.d/swarm.conf
 

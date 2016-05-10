@@ -64,6 +64,9 @@ stdout_logfile=syslog
 stderr_logfile=syslog
 EOF
 
+sudo chown root:root swarm.conf
+sudo mv swarm.conf /etc/supervisor/conf.d/
+sudo chmod 755 /etc/supervisor/conf.d/swarm.conf
 
 sudo sed -i "s|JPW|$JENKINS_PW|g" /etc/supervisor/conf.d/swarm.conf
 

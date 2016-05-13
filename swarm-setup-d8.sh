@@ -10,6 +10,12 @@
 #  This script is run from the Git repo directory
 #
 
+echo 'Create jenkins user'
+sudo addgroup build
+sudo adduser --disabled-password --system --ingroup build jenkins
+sudo mkdir /home/jenkins/build
+sudo chown jenkins:build /home/jenkins/build
+
 echo 'Changing to user home directory'
 cd
 
@@ -26,20 +32,15 @@ sudo apt-get -y -qq install docker-engine
 sudo service docker start
 sudo docker run hello-world
 sudo gpasswd -a $USER docker
+sudo gpasswd -a jenkins docker
 sudo service docker restart
 
 echo 'Installing Supervisor...'
 # Install supervisor package
 sudo apt-get -y -qq install supervisor
 
-sudo addgroup build
-sudo adduser --disabled-password --system --ingroup build jenkins
-sudo mkdir /home/jenkins/build
-sudo chown jenkins:build /home/jenkins/build
-
-# Install the Jenkins build agent agent code
-
 echo 'Installing Jenkins Slave software'
+# Install the Jenkins build agent agent code
 sudo mkdir -p /opt/jenkins-slave
 sudo mv slave.jar /opt/jenkins-slave
 sudo chown -R root:root /opt/jenkins-slave

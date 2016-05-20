@@ -75,18 +75,6 @@ echo 'Installing UNZIP program'
 cd
 sudo apt-get -y -qq install unzip
 
-echo 'Installing Packer program'
-# wget -q -O packer.zip https://releases.hashicorp.com/packer/0.9.0/packer_0.9.0_linux_amd64.zip
-# sudo mkdir -p /opt/packer
-# sudo unzip -d /opt/packer packer.zip
-# sudo chown root:staff /opt/packer/*
-
-# Remove the Packer installation ZIP file
-# rm packer.zip
-
-# Update gcloud SDK components
-# sudo gcloud components update -q
-
 # Configure the Swarm service to start when the instance boots
 sudo supervisorctl reread
 sudo supervisorctl update

@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# File: swarm-setup.sh
+# File: swarm-setup-d8.sh
 #
 # Purpose: Complete setup steps for the Jenkins worker node instance
 #
